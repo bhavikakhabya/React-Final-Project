@@ -1,0 +1,92 @@
+.searchRow { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
+.resultCount { font-size: 0.83rem; color: #73766A; font-weight: 500; }
+
+.layout {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+/* Map */
+.mapCard {
+  padding: 20px;
+  overflow: hidden;
+}
+.mapTitle {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #2D4354;
+  margin-bottom: 12px;
+  letter-spacing: 0.03em;
+}
+.mapSvg { width: 100%; height: auto; display: block; border-radius: 12px; }
+.mapLegend {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  font-size: 0.75rem;
+  color: #73766A;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(115,118,106,0.18);
+}
+.legendDot {
+  display: inline-block;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Right panel */
+.rightPanel { display: flex; flex-direction: column; gap: 16px; }
+.passengerList { display: flex; flex-direction: column; gap: 8px; max-height: 340px; overflow-y: auto; }
+.passengerList::-webkit-scrollbar { width: 4px; }
+.passengerList::-webkit-scrollbar-thumb { background: rgba(115,118,106,0.3); border-radius: 99px; }
+
+/* Passenger card */
+.locationCard {
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.locationCard.active {
+  border-color: rgba(45,67,84,0.45) !important;
+  background: rgba(45,67,84,0.08) !important;
+}
+.avatarEmoji { font-size: 1.5rem; flex-shrink: 0; line-height: 1; }
+.info { flex: 1; }
+.name { display: block; font-weight: 600; font-size: 0.88rem; color: #20212B; }
+.area { display: flex; align-items: center; gap: 4px; font-size: 0.74rem; color: #73766A; margin-top: 2px; }
+.statusBadge {
+  font-size: 0.74rem; font-weight: 600;
+  padding: 3px 8px; border-radius: 99px;
+  border: 1px solid;
+  background: transparent;
+  white-space: nowrap;
+}
+.empty { text-align: center; padding: 24px; color: #73766A; background: rgba(255,255,255,0.2); border-radius: 14px; font-size: 0.9rem; }
+
+.skeletonList { display: flex; flex-direction: column; gap: 8px; }
+.skel { height: 58px; border-radius: 14px; }
+
+/* Detail Card */
+.detailCard { padding: 24px; display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; }
+.detailEmoji { font-size: 3rem; }
+.detailName { font-size: 1.1rem; font-weight: 800; color: #20212B; }
+.detailGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; }
+.detailItem {
+  background: rgba(255,255,255,0.3); border-radius: 10px; padding: 10px;
+  display: flex; flex-direction: column; gap: 3px;
+}
+.detailItem span { font-size: 0.68rem; color: #73766A; text-transform: uppercase; letter-spacing: 0.04em; }
+.detailItem strong { font-size: 0.82rem; color: #20212B; }
+
+@media (max-width: 768px) {
+  .layout { grid-template-columns: 1fr; }
+  .passengerList { max-height: 240px; }
+}

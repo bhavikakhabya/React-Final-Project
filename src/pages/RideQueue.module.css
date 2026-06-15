@@ -1,0 +1,13 @@
+.formCard { padding: 24px; display: flex; flex-direction: column; gap: 16px; }
+.cardTitle { font-size: 1rem; font-weight: 700; color: #190019; }
+.queueHeader { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.queueItem { padding: 14px 18px; margin-bottom: 10px; display: flex; align-items: center; gap: 14px; }
+.front { border-left: 3px solid #522B5B !important; background: rgba(82,43,91,0.08) !important; }
+.queuePos { font-size: 0.72rem; font-weight: 700; color: #522B5B; min-width: 56px; }
+.queueInfo { flex: 1; }
+.queueName { display: block; font-weight: 600; color: #190019; font-size: 0.9rem; }
+.queueRoute { display: block; font-size: 0.78rem; color: #854F6C; }
+.queueTime { font-size: 0.75rem; color: #854F6C; }
+.empty { text-align: center; padding: 32px; color: #854F6C; background: rgba(255,255,255,0.2); border-radius: 16px; font-size: 0.9rem; }
+.processedSection { margin-top: 20px; }
+.processedItem { padding: 12px 16px; display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 0.85rem; color: #190019; }

@@ -1,0 +1,35 @@
+.selectorCard { padding: 24px; margin-bottom: 24px; }
+.selects { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+.arrow { font-size: 1.2rem; color: #854F6C; padding-bottom: 12px; }
+
+.routesGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-top: 4px; }
+.routeCard { padding: 24px; cursor: pointer; position: relative; overflow: hidden; }
+.routeSelected { border-color: rgba(82,43,91,0.6) !important; box-shadow: 0 8px 32px rgba(82,43,91,0.2) !important; }
+.cheapestBadge {
+  position: absolute; top: 12px; right: 12px;
+  background: linear-gradient(135deg, #27ae60, #1e8449);
+  color: #fff; font-size: 0.72rem; font-weight: 700;
+  padding: 4px 10px; border-radius: 99px;
+}
+.routeName { font-size: 1.05rem; font-weight: 800; margin-bottom: 14px; }
+.stops { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+.stopChip {
+  background: rgba(255,255,255,0.3); border: 1px solid rgba(82,43,91,0.2);
+  border-radius: 99px; padding: 4px 10px; font-size: 0.73rem; font-weight: 500; color: #522B5B;
+}
+.routeStats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.statItem {
+  background: rgba(255,255,255,0.25); border-radius: 10px; padding: 10px 12px;
+  display: flex; flex-direction: column; gap: 2px;
+}
+.statItem span { font-size: 0.7rem; color: #854F6C; text-transform: uppercase; letter-spacing: 0.04em; }
+.statItem strong { font-size: 0.9rem; color: #190019; font-weight: 700; }
+.savings {
+  margin-top: 12px; padding: 8px 12px; border-radius: 10px;
+  background: rgba(39,174,96,0.1); font-size: 0.8rem; color: #1e8449; font-weight: 600;
+}
+.placeholder {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: 220px; gap: 14px; color: #854F6C; font-size: 0.9rem;
+  background: rgba(255,255,255,0.2); border-radius: 20px; text-align: center; padding: 32px;
+}

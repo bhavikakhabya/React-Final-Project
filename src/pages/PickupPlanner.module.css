@@ -1,0 +1,43 @@
+.selectorCard { padding: 24px; display: flex; flex-direction: column; gap: 16px; }
+.cardTitle { font-size: 0.95rem; font-weight: 700; color: #190019; }
+.passengerGrid { display: flex; flex-direction: column; gap: 8px; max-height: 340px; overflow-y: auto; }
+.passengerBtn {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 14px; border-radius: 12px; text-align: left;
+  border: 1.5px solid rgba(82,43,91,0.2); background: rgba(255,255,255,0.2);
+  cursor: pointer; transition: all 0.2s; font-family: inherit;
+}
+.passengerBtn:hover { border-color: #522B5B; background: rgba(82,43,91,0.06); }
+.passengerActive { border-color: #522B5B !important; background: rgba(82,43,91,0.12) !important; }
+.checkIcon { color: #522B5B; flex-shrink: 0; display: flex; }
+.pName { font-size: 0.87rem; font-weight: 600; color: #190019; }
+.pArea { font-size: 0.75rem; color: #854F6C; }
+.btnRow { display: flex; gap: 10px; align-items: center; }
+
+.emptyRoute {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+  min-height: 200px; background: rgba(255,255,255,0.2); border-radius: 20px;
+  color: #854F6C; font-size: 0.9rem; text-align: center; padding: 32px;
+}
+.stopCard { padding: 16px 18px; margin-bottom: 8px; display: flex; align-items: center; gap: 14px; position: relative; }
+.stopNum {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: linear-gradient(135deg, #522B5B, #854F6C);
+  color: #fff; font-weight: 800; font-size: 0.85rem;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.stopLine { position: relative; }
+.stopConnector {
+  position: absolute; top: 32px; left: 50%; transform: translateX(-50%);
+  width: 2px; height: 20px; background: rgba(82,43,91,0.25);
+}
+.stopInfo { flex: 1; }
+.stopPassenger { display: block; font-weight: 700; font-size: 0.9rem; color: #190019; }
+.stopLocation { display: block; font-size: 0.78rem; color: #854F6C; margin-top: 2px; }
+.stopEta { display: flex; flex-direction: column; align-items: flex-end; font-size: 0.72rem; color: #854F6C; }
+.stopEta strong { font-size: 0.88rem; color: #522B5B; font-weight: 700; }
+.destCard {
+  padding: 16px; text-align: center; font-weight: 700; font-size: 0.9rem;
+  color: #27ae60; background: rgba(39,174,96,0.08) !important;
+  border-color: rgba(39,174,96,0.25) !important;
+}

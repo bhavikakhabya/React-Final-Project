@@ -1,0 +1,19 @@
+.priceCard { padding: 28px; display: flex; flex-direction: column; gap: 16px; }
+.priceLabel { font-size: 0.82rem; font-weight: 600; color: #854F6C; text-transform: uppercase; letter-spacing: 0.06em; }
+.priceValue { font-size: 3.5rem; font-weight: 800; color: #190019; letter-spacing: -0.03em; }
+.inputRow { display: flex; gap: 10px; align-items: flex-start; }
+.historyCount { font-size: 0.78rem; color: #854F6C; text-align: center; }
+
+.timeline { display: flex; flex-direction: column; gap: 10px; }
+.timelineItem { padding: 14px 18px; display: flex; align-items: center; gap: 14px; }
+.stackDot {
+  width: 12px; height: 12px; border-radius: 50%;
+  background: rgba(133,79,108,0.3); flex-shrink: 0;
+}
+.topDot { background: #522B5B; box-shadow: 0 0 0 4px rgba(82,43,91,0.2); }
+.stackInfo { flex: 1; }
+.stackPrice { display: block; font-size: 1.1rem; font-weight: 700; color: #190019; }
+.stackTag { font-size: 0.75rem; color: #854F6C; }
+.empty { text-align: center; padding: 32px; color: #854F6C; font-size: 0.9rem; background: rgba(255,255,255,0.2); border-radius: 16px; }
+
+@media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr !important; } }

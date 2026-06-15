@@ -1,0 +1,68 @@
+.searchWrap { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
+.count { font-size: 0.83rem; color: #73766A; font-weight: 500; }
+.list { display: flex; flex-direction: column; gap: 14px; }
+
+.rideCard {
+  padding: 20px 24px;
+  position: relative;
+  padding-right: 60px; /* reserve space for delete button */
+}
+
+.routeLine {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+.from, .to { font-weight: 700; font-size: 0.95rem; color: #20212B; }
+.arrow { color: #73766A; font-size: 0.9rem; flex-shrink: 0; }
+.dist {
+  font-size: 0.78rem;
+  color: #73766A;
+  background: rgba(115,118,106,0.12);
+  padding: 3px 10px;
+  border-radius: 99px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.meta {
+  display: flex;
+  gap: 14px;
+  font-size: 0.8rem;
+  color: #73766A;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.meta span { display: flex; align-items: center; gap: 4px; }
+
+.passengers { display: flex; gap: 6px; flex-wrap: wrap; }
+
+.deleteBtn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  color: #c0392b;
+  padding: 6px 8px;
+  border-radius: 8px;
+  border: 1.5px solid rgba(192,57,43,0.2);
+  background: rgba(192,57,43,0.06);
+  transition: all 0.2s;
+}
+.deleteBtn:hover {
+  background: rgba(192,57,43,0.15);
+  border-color: rgba(192,57,43,0.4);
+}
+
+.skeletonList { display: flex; flex-direction: column; gap: 14px; }
+.skeleton { height: 110px; border-radius: 20px; }
+.empty {
+  text-align: center;
+  padding: 40px;
+  color: #73766A;
+  font-size: 0.95rem;
+  background: rgba(255,255,255,0.22);
+  border-radius: 20px;
+}

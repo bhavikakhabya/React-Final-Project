@@ -1,0 +1,32 @@
+.heroCard { padding: 32px; display: flex; gap: 32px; align-items: center; margin-bottom: 24px; flex-wrap: wrap; }
+.heroLeft { flex-shrink: 0; }
+.scoreCircle {
+  width: 100px; height: 100px; border-radius: 50%;
+  background: linear-gradient(135deg, #27ae60, #1e8449);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  box-shadow: 0 8px 30px rgba(39,174,96,0.4);
+  color: #fff;
+}
+.scoreNum { font-size: 2rem; font-weight: 900; line-height: 1; }
+.scoreLabel { font-size: 0.65rem; font-weight: 600; opacity: 0.85; text-transform: uppercase; letter-spacing: 0.05em; }
+.heroRight { flex: 1; min-width: 200px; }
+.heroTitle { font-size: 1.2rem; font-weight: 800; color: #190019; margin-bottom: 8px; }
+.heroDesc { font-size: 0.88rem; color: #854F6C; line-height: 1.5; margin-bottom: 16px; }
+.progressWrap { display: flex; align-items: center; gap: 10px; }
+.progressLabel { font-size: 0.78rem; color: #854F6C; white-space: nowrap; }
+.progressBar { flex: 1; height: 8px; background: rgba(133,79,108,0.15); border-radius: 99px; overflow: hidden; }
+.progressFill { height: 100%; background: linear-gradient(90deg, #27ae60, #1e8449); border-radius: 99px; }
+.progressPct { font-size: 0.8rem; font-weight: 700; color: #27ae60; }
+
+.statsGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+.statCard { padding: 22px; display: flex; flex-direction: column; gap: 8px; }
+.statIcon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+.statValue { font-size: 1.8rem; font-weight: 800; line-height: 1; }
+.statLabel { font-size: 0.82rem; font-weight: 700; color: #190019; }
+.statDesc { font-size: 0.75rem; color: #854F6C; }
+
+.chartCard { padding: 24px; }
+.barChart { display: flex; gap: 12px; align-items: flex-end; height: 140px; padding: 0 8px; margin-top: 16px; }
+.barGroup { display: flex; flex-direction: column; align-items: center; gap: 6px; flex: 1; height: 100%; }
+.bar { width: 100%; max-width: 36px; border-radius: 8px 8px 0 0; background: linear-gradient(180deg, #27ae60, #1e8449); min-height: 4px; }
+.barLabel { font-size: 0.72rem; font-weight: 600; color: #854F6C; }

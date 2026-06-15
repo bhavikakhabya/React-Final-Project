@@ -1,0 +1,33 @@
+.controls { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
+.label { font-size: 0.87rem; font-weight: 600; color: #522B5B; }
+.toggleGroup { display: flex; gap: 8px; }
+.count { font-size: 0.82rem; color: #854F6C; margin-left: auto; }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+.card { padding: 20px; display: flex; align-items: center; gap: 14px; position: relative; }
+.rank {
+  position: absolute; top: 10px; left: 10px;
+  font-size: 0.68rem; font-weight: 800; color: #854F6C;
+  background: rgba(133,79,108,0.12); padding: 2px 7px; border-radius: 99px;
+}
+.avatar {
+  width: 46px; height: 46px; border-radius: 50%;
+  background: linear-gradient(135deg, #522B5B, #854F6C);
+  color: #fff; font-size: 0.9rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 8px;
+}
+.info { flex: 1; min-width: 0; }
+.name { display: block; font-weight: 700; font-size: 0.9rem; color: #190019; }
+.vehicle { display: flex; align-items: center; gap: 4px; font-size: 0.75rem; color: #854F6C; margin-top: 3px; }
+.meta { margin-top: 5px; }
+.rating { display: flex; align-items: center; gap: 3px; font-size: 0.78rem; font-weight: 600; color: #b8860b; }
+.seats { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+.seatsNum { font-size: 1.6rem; font-weight: 800; line-height: 1; }
+.seatsLabel { font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.8; }
+.skeletonGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
+.skel { height: 90px; border-radius: 20px; }
+.errorBox { text-align: center; padding: 32px; color: #854F6C; background: rgba(255,255,255,0.2); border-radius: 20px; }

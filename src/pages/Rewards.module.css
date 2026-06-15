@@ -1,0 +1,37 @@
+.levelCard { padding: 28px; display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; }
+.levelIcon { font-size: 3rem; }
+.levelName { font-size: 1.5rem; font-weight: 900; letter-spacing: 0.02em; }
+.points { display: flex; align-items: center; gap: 6px; font-size: 1.2rem; font-weight: 800; color: #190019; }
+.progressSection { width: 100%; }
+.progressLabel { font-size: 0.78rem; color: #854F6C; margin-bottom: 8px; }
+.progressBar { height: 10px; background: rgba(133,79,108,0.15); border-radius: 99px; overflow: hidden; }
+.progressFill { height: 100%; border-radius: 99px; }
+.progressPct { font-size: 0.78rem; font-weight: 700; color: #522B5B; float: right; margin-top: 4px; }
+.perks { width: 100%; text-align: left; }
+.perksTitle { font-size: 0.78rem; font-weight: 700; color: #522B5B; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.04em; }
+.perkItem { font-size: 0.82rem; color: #190019; padding: 4px 0; border-bottom: 1px solid rgba(133,79,108,0.1); }
+
+.ladder { display: flex; flex-direction: column; gap: 10px; }
+.ladderItem { padding: 14px 16px; display: flex; align-items: center; gap: 12px; }
+.currentLvl { border-color: rgba(82,43,91,0.4) !important; background: rgba(82,43,91,0.08) !important; }
+.ladderIcon { font-size: 1.4rem; }
+.ladderInfo { flex: 1; }
+.ladderName { display: block; font-weight: 700; font-size: 0.92rem; }
+.ladderRange { display: block; font-size: 0.75rem; color: #854F6C; }
+.currentTag {
+  font-size: 0.65rem; font-weight: 800; color: #522B5B;
+  background: rgba(82,43,91,0.12); padding: 3px 8px; border-radius: 99px; letter-spacing: 0.06em;
+}
+
+.badgesGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; }
+.badgeCard { padding: 20px 14px; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; position: relative; overflow: hidden; }
+.locked { opacity: 0.6; }
+.badgeEmoji { font-size: 2.2rem; }
+.badgeLabel { font-size: 0.82rem; font-weight: 700; color: #190019; }
+.badgeDesc { font-size: 0.72rem; color: #854F6C; line-height: 1.3; }
+.lockOverlay {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem; background: rgba(255,255,255,0.4); border-radius: inherit;
+  opacity: 0; transition: opacity 0.2s;
+}
+.badgeCard.locked:hover .lockOverlay { opacity: 1; }

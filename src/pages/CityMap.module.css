@@ -1,0 +1,60 @@
+.layout {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+/* Map */
+.mapCard { padding: 20px; overflow: hidden; }
+.mapHeader {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 0.82rem; font-weight: 700; color: #2D4354;
+  margin-bottom: 12px; letter-spacing: 0.03em;
+}
+.mapSvg { width: 100%; height: auto; display: block; border-radius: 12px; }
+
+.legend {
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  font-size: 0.75rem; color: #73766A;
+  margin-top: 12px; padding-top: 12px;
+  border-top: 1px solid rgba(115,118,106,0.18);
+}
+.legendItem { display: flex; align-items: center; gap: 5px; }
+.dotSelected { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #9E6752; }
+.dotConnected { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #2D4354; }
+.dotDefault { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.55); border: 1.5px solid #534145; }
+
+/* Info Card */
+.infoCard { padding: 28px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.nodeIcon { font-size: 2.2rem; }
+.nodeName { font-size: 1.3rem; font-weight: 800; color: #20212B; }
+.nodeDesc { font-size: 0.85rem; color: #73766A; }
+.connectList { display: flex; flex-direction: column; gap: 8px; width: 100%; }
+.connectItem {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,0.28); padding: 10px 14px; border-radius: 12px;
+  font-size: 0.88rem; color: #20212B; font-weight: 500;
+}
+.connectDot { width: 8px; height: 8px; border-radius: 50%; background: #9E6752; flex-shrink: 0; }
+
+/* Hint Card */
+.hintCard { padding: 32px; display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; }
+.hintEmoji { font-size: 2.8rem; }
+.hintCard p { font-size: 0.9rem; color: #2D4354; }
+.hintSub { font-size: 0.8rem; color: #73766A !important; }
+
+/* Chips */
+.nodeListWrap { margin-top: 8px; }
+.nodeChips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  padding: 6px 14px; border-radius: 99px; font-size: 0.8rem; font-weight: 600;
+  border: 1.5px solid rgba(45,67,84,0.22); background: rgba(255,255,255,0.28);
+  color: #2D4354; cursor: pointer; transition: all 0.2s; font-family: inherit;
+}
+.chip:hover { background: rgba(45,67,84,0.1); border-color: #2D4354; }
+.chipActive { background: #2D4354 !important; color: #FED7A5 !important; border-color: #2D4354 !important; }
+
+@media (max-width: 768px) {
+  .layout { grid-template-columns: 1fr; }
+}
