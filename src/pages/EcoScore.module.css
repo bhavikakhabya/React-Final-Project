@@ -26,7 +26,9 @@
 .statDesc { font-size: 0.75rem; color: #854F6C; }
 
 .chartCard { padding: 24px; }
-.barChart { display: flex; gap: 12px; align-items: flex-end; height: 140px; padding: 0 8px; margin-top: 16px; }
-.barGroup { display: flex; flex-direction: column; align-items: center; gap: 6px; flex: 1; height: 100%; }
+.barChart { display: flex; gap: 12px; align-items: flex-end; height: 160px; padding: 0 8px; margin-top: 16px; }
+.barGroup { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; height: 100%; justify-content: flex-end; }
+.barValue { font-size: 0.62rem; font-weight: 700; color: #27ae60; min-height: 14px; }
 .bar { width: 100%; max-width: 36px; border-radius: 8px 8px 0 0; background: linear-gradient(180deg, #27ae60, #1e8449); min-height: 4px; }
-.barLabel { font-size: 0.72rem; font-weight: 600; color: #854F6C; }
+.barLabel { font-size: 0.72rem; font-weight: 600; color: #73766A; }
+

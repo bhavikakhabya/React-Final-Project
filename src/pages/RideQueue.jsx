@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ListOrdered, Plus, ChevronRight, CheckCircle, Clock } from 'lucide-react';
+import { ListOrdered, Plus, ChevronRight, CheckCircle, Clock, Star, Leaf } from 'lucide-react';
 import { useRide } from '../context/RideContext';
 import styles from './RideQueue.module.css';
 
@@ -11,6 +11,7 @@ export default function RideQueue() {
   const [form, setForm] = useState({ name: '', from: AREAS[0], to: AREAS[1] });
   const [formError, setFormError] = useState('');
   const [processed, setProcessed] = useState([]);
+  const [feedback, setFeedback] = useState(null);
 
   const handleAdd = () => {
     if (!form.name.trim()) { setFormError('Passenger name is required'); return; }
@@ -32,14 +33,50 @@ export default function RideQueue() {
     const front = state.requestQueue[0];
     setProcessed(p => [{ ...front, processedAt: new Date().toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' }) }, ...p]);
     dispatch({ type: 'PROCESS_REQUEST' });
+    // Show feedback toast
+    setFeedback(`✅ Ride saved! +80 pts • +2.4 kg CO₂ tracked`);
+    setTimeout(() => setFeedback(null), 3000);
   };
 
   return (
     <div>
       <div className="page-header">
         <h1 className="page-title"><ListOrdered size={24} style={{ verticalAlign:'middle', marginRight:8 }} />Ride Request Queue</h1>
-        <p className="page-subtitle">FIFO Queue visualization — first requested, first served</p>
+        <p className="page-subtitle">FIFO Queue — processed rides auto-save to Ride History, award points & update Eco Score</p>
       </div>
+
+      {/* Live stats bar */}
+      <div className={styles.liveStats}>
+        <div className={styles.liveStat}>
+          <Star size={14} color="#e67e22" />
+          <span><strong>{state.points}</strong> reward pts</span>
+        </div>
+        <div className={styles.liveStatDivider} />
+        <div className={styles.liveStat}>
+          <Leaf size={14} color="#27ae60" />
+          <span><strong>{((state.totalCo2Saved || 0) + 57.6).toFixed(1)} kg</strong> CO₂ saved</span>
+        </div>
+        <div className={styles.liveStatDivider} />
+        <div className={styles.liveStat}>
+          <CheckCircle size={14} color="#2D4354" />
+          <span><strong>{state.completedRides || 0}</strong> queue rides done</span>
+        </div>
+      </div>
+
+      {/* Toast notification */}
+      <AnimatePresence>
+        {feedback && (
+          <motion.div
+            className={styles.feedbackToast}
+            initial={{ opacity: 0, y: -12, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -8, scale: 0.96 }}
+            transition={{ duration: 0.28 }}
+          >
+            {feedback}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <div className="grid-2" style={{ gap: 24, alignItems: 'start' }}>
         {/* Add Request Form */}

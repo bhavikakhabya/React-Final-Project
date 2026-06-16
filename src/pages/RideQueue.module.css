@@ -1,13 +1,50 @@
 .formCard { padding: 24px; display: flex; flex-direction: column; gap: 16px; }
-.cardTitle { font-size: 1rem; font-weight: 700; color: #190019; }
+.cardTitle { font-size: 1rem; font-weight: 700; color: #20212B; }
 .queueHeader { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
 .queueItem { padding: 14px 18px; margin-bottom: 10px; display: flex; align-items: center; gap: 14px; }
-.front { border-left: 3px solid #522B5B !important; background: rgba(82,43,91,0.08) !important; }
-.queuePos { font-size: 0.72rem; font-weight: 700; color: #522B5B; min-width: 56px; }
+.front { border-left: 3px solid #2D4354 !important; background: rgba(45,67,84,0.07) !important; }
+.queuePos { font-size: 0.72rem; font-weight: 700; color: #2D4354; min-width: 56px; }
 .queueInfo { flex: 1; }
-.queueName { display: block; font-weight: 600; color: #190019; font-size: 0.9rem; }
-.queueRoute { display: block; font-size: 0.78rem; color: #854F6C; }
-.queueTime { font-size: 0.75rem; color: #854F6C; }
-.empty { text-align: center; padding: 32px; color: #854F6C; background: rgba(255,255,255,0.2); border-radius: 16px; font-size: 0.9rem; }
+.queueName { display: block; font-weight: 600; color: #20212B; font-size: 0.9rem; }
+.queueRoute { display: block; font-size: 0.78rem; color: #73766A; }
+.queueTime { font-size: 0.75rem; color: #73766A; }
+.empty { text-align: center; padding: 32px; color: #73766A; background: rgba(255,255,255,0.2); border-radius: 16px; font-size: 0.9rem; }
 .processedSection { margin-top: 20px; }
-.processedItem { padding: 12px 16px; display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 0.85rem; color: #190019; }
+.processedItem { padding: 12px 16px; display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 0.85rem; color: #20212B; }
+
+/* ── Live stats bar ──────────────────────────────────────── */
+.liveStats {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: rgba(255,255,255,0.42);
+  border: 1px solid rgba(255,255,255,0.6);
+  backdrop-filter: blur(14px);
+  border-radius: 14px;
+  padding: 12px 20px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.liveStat {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.82rem;
+  color: #73766A;
+  padding: 0 16px;
+}
+.liveStat strong { color: #20212B; }
+.liveStatDivider { width: 1px; height: 20px; background: rgba(115,118,106,0.2); flex-shrink: 0; }
+
+/* ── Toast ───────────────────────────────────────────────── */
+.feedbackToast {
+  background: linear-gradient(135deg, #2D4354, #9E6752);
+  color: #FED7A5;
+  font-size: 0.86rem;
+  font-weight: 600;
+  padding: 12px 20px;
+  border-radius: 13px;
+  margin-bottom: 16px;
+  box-shadow: 0 6px 24px rgba(45,67,84,0.3);
+}

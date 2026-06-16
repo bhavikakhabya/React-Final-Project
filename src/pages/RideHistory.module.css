@@ -1,68 +1,142 @@
-.searchWrap { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
-.count { font-size: 0.83rem; color: #73766A; font-weight: 500; }
-.list { display: flex; flex-direction: column; gap: 14px; }
+.searchWrap { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
+.count { font-size: 0.83rem; color: #73766A; font-weight: 500; white-space: nowrap; }
 
-.rideCard {
-  padding: 20px 24px;
-  position: relative;
-  padding-right: 60px; /* reserve space for delete button */
+/* Stats banner */
+.statsBanner {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
 }
+.statBannerItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 18px;
+  background: rgba(255,255,255,0.45);
+  border: 1px solid rgba(255,255,255,0.6);
+  border-radius: 16px;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 2px 10px rgba(32,33,43,0.06);
+}
+.statBannerEmoji { font-size: 1.4rem; flex-shrink: 0; }
+.statBannerVal { font-size: 1rem; font-weight: 800; color: #20212B; line-height: 1.1; }
+.statBannerLbl { font-size: 0.68rem; color: #73766A; font-weight: 500; margin-top: 2px; text-transform: uppercase; letter-spacing: 0.04em; }
+
+.list { display: flex; flex-direction: column; gap: 12px; }
+
+/* Ride card */
+.rideCard {
+  padding: 18px 22px;
+  position: relative;
+  padding-right: 56px;
+}
+.rideTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.routeSvg { width: 80px; flex-shrink: 0; opacity: 0.85; }
 
 .routeLine {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 10px;
+  gap: 7px;
   flex-wrap: wrap;
+  flex: 1;
 }
-.from, .to { font-weight: 700; font-size: 0.95rem; color: #20212B; }
-.arrow { color: #73766A; font-size: 0.9rem; flex-shrink: 0; }
+.from { font-weight: 700; font-size: 0.92rem; color: #9E6752; }
+.to   { font-weight: 700; font-size: 0.92rem; color: #2D4354; }
 .dist {
-  font-size: 0.78rem;
+  font-size: 0.73rem;
   color: #73766A;
-  background: rgba(115,118,106,0.12);
-  padding: 3px 10px;
+  background: rgba(115,118,106,0.1);
+  padding: 3px 9px;
   border-radius: 99px;
   white-space: nowrap;
   flex-shrink: 0;
+  border: 1px solid rgba(115,118,106,0.18);
 }
 
 .meta {
   display: flex;
-  gap: 14px;
-  font-size: 0.8rem;
+  gap: 16px;
+  font-size: 0.78rem;
   color: #73766A;
   align-items: center;
   flex-wrap: wrap;
   margin-bottom: 10px;
 }
 .meta span { display: flex; align-items: center; gap: 4px; }
+.fareChip {
+  display: flex; align-items: center; gap: 4px;
+  background: rgba(45,67,84,0.08);
+  color: #2D4354 !important;
+  font-weight: 700 !important;
+  padding: 3px 10px;
+  border-radius: 99px;
+  border: 1px solid rgba(45,67,84,0.14);
+}
 
-.passengers { display: flex; gap: 6px; flex-wrap: wrap; }
+.passengerRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.passengerBadge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #2D4354;
+  background: rgba(45,67,84,0.08);
+  border: 1px solid rgba(45,67,84,0.18);
+  padding: 3px 10px;
+  border-radius: 99px;
+}
+.totalFare {
+  margin-left: auto;
+  font-size: 0.73rem;
+  color: #73766A;
+  font-style: italic;
+}
 
 .deleteBtn {
   position: absolute;
   top: 16px;
   right: 16px;
   color: #c0392b;
-  padding: 6px 8px;
-  border-radius: 8px;
-  border: 1.5px solid rgba(192,57,43,0.2);
+  padding: 7px 9px;
+  border-radius: 10px;
+  border: 1.5px solid rgba(192,57,43,0.18);
   background: rgba(192,57,43,0.06);
+  cursor: pointer;
   transition: all 0.2s;
+  display: flex; align-items: center;
 }
 .deleteBtn:hover {
-  background: rgba(192,57,43,0.15);
-  border-color: rgba(192,57,43,0.4);
+  background: rgba(192,57,43,0.14);
+  border-color: rgba(192,57,43,0.38);
+  transform: scale(1.05);
 }
 
-.skeletonList { display: flex; flex-direction: column; gap: 14px; }
-.skeleton { height: 110px; border-radius: 20px; }
+.skeletonList { display: flex; flex-direction: column; gap: 12px; }
+.skeleton { height: 116px; border-radius: 20px; }
 .empty {
   text-align: center;
-  padding: 40px;
+  padding: 44px 20px;
   color: #73766A;
-  font-size: 0.95rem;
-  background: rgba(255,255,255,0.22);
+  background: rgba(255,255,255,0.28);
   border-radius: 20px;
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+}
+.empty p { font-size: 0.9rem; }
+
+@media (max-width: 768px) {
+  .statsBanner { grid-template-columns: repeat(2, 1fr); }
+  .routeSvg { display: none; }
+}
+@media (max-width: 480px) {
+  .statsBanner { grid-template-columns: 1fr 1fr; }
 }

@@ -186,11 +186,11 @@ export default function Profile() {
               <motion.div key="activity" initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -10 }}>
                 <div className={styles.activityList}>
                   {[
-                    { icon: '🚗', label: 'First ride completed', sub: 'Badge earned', color: '#27ae60' },
-                    { icon: '🌱', label: 'Eco Warrior badge', sub: '10 kg CO₂ saved', color: '#2D4354' },
-                    { icon: '💰', label: 'Money Saver badge', sub: '₹500+ saved', color: '#9E6752' },
-                    { icon: '⭐', label: `${points} reward points`, sub: 'Keep riding to earn more', color: '#e67e22' },
-                    { icon: '🏆', label: 'Gold level reached', sub: `${totalRides} total rides`, color: '#9E6752' },
+                    { icon: '🚗', label: 'Total rides completed', sub: `${totalRides} rides so far`, color: '#27ae60' },
+                    { icon: '🌱', label: 'CO₂ saved', sub: `${co2Saved} kg through carpooling`, color: '#2D4354' },
+                    { icon: '💰', label: `${state.completedRides || 0} rides via Queue`, sub: 'Fares split with co-riders', color: '#9E6752' },
+                    { icon: '⭐', label: `${points} reward points`, sub: 'Earn 80 pts per completed ride', color: '#e67e22' },
+                    { icon: '🏆', label: totalRides >= 20 ? 'Gold level reached' : 'Keep riding!', sub: `${totalRides} total rides`, color: '#9E6752' },
                   ].map((item, i) => (
                     <motion.div
                       key={i}
