@@ -132,24 +132,6 @@ The app allows users to book rides, manage a FIFO request queue, track price cha
 
 ---
 
-## 🛠️ Changes Made — June 17, 2026
-
-### Bug Fixes
-
-| Issue | Fix |
-|---|---|
-| Toll Planner & Pickup Planner not visible in app | Added both to `Sidebar.jsx` `NAV_ITEMS` with correct icons (`BadgeDollarSign`, `Navigation`) |
-| Toll Planner showed identical prices for every destination | Replaced static `TOLL_ROUTES` array with dynamic `getRoutesForTrip(from, to)` function |
-| Pending Requests count not updating on approve/reject | Lifted `dismissed` state to Dashboard so `allRequests.length` drives the badge directly |
-| Only 2 of 6 stat cards were interactive | All 6 stat cards now have `onClick` — 4 navigate to pages, 2 expand detail panels |
-
-### Enhancements
-
-- **`mockData.js`** — Added `TRIP_BASE_KM` distance table (6 origins × 5 destinations), `ROUTE_STOPS` lookup (highway / city / bypass intermediate stops), and exported `getRoutesForTrip(from, to)` function
-- **`TollPlanner.jsx`** — Now stores computed routes in `useState`, calls `getRoutesForTrip` on every search, uses `from-to` as animation key so cards re-animate on destination change
-- **`Dashboard.jsx`** — `dismissed` and `allRequests` lifted to top-level component; `PendingRequestsPanel` receives props instead of managing its own dismissed state; all 6 stat cards get `onClick`; `useNavigate` used for navigation cards; `useCallback` wraps `handleApprove` and `handleReject`
-- **`Dashboard.module.css`** — Added `.statCardActive`, `.statChevron`, `.expandPanel`, `.panelInner`, `.requestRow`, `.approveBtn`, `.rejectBtn`, `.carpoolRow`, `.carpoolStatus`, `.panelFooterLink` styles
-
 ---
 
 ## 🪝 React Concepts Demonstrated
