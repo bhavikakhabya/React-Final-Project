@@ -2,7 +2,8 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   LayoutDashboard, History, ListOrdered, MapPin, SlidersHorizontal,
-  Map, DollarSign, Leaf, Trophy, User, LogOut, Car, ChevronLeft, ChevronRight
+  Map, DollarSign, Leaf, Trophy, User, LogOut, Car, ChevronLeft, ChevronRight,
+  Navigation, BadgeDollarSign
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
@@ -16,6 +17,8 @@ const NAV_ITEMS = [
   { to: '/location-finder',icon: MapPin,            label: 'Location Finder' },
   { to: '/seat-sorter',    icon: SlidersHorizontal, label: 'Seat Sorter'     },
   { to: '/city-map',       icon: Map,               label: 'City Map'        },
+  { to: '/pickup-planner', icon: Navigation,        label: 'Pickup Planner'  },
+  { to: '/toll-planner',   icon: BadgeDollarSign,   label: 'Toll Planner'    },
   { to: '/eco-score',      icon: Leaf,              label: 'Eco Score'       },
   { to: '/rewards',        icon: Trophy,            label: 'Rewards'         },
   { to: '/profile',        icon: User,              label: 'Profile'         },

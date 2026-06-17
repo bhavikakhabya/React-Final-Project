@@ -41,23 +41,93 @@ export const CITY_EDGES = [
   { from: 'n8', to: 'n10'},
 ];
 
-export const TOLL_ROUTES = [
-  {
-    id: 'tr1', name: 'Express Highway', color: '#27ae60',
-    stops: ['Thane', 'Powai', 'Andheri E', 'Churchgate'],
-    distance: '32 km', time: '45 min', baseFare: 280, toll: 60, total: 340,
+// ── Real approximate road distances (km) between Mumbai locations ──────────
+const TRIP_BASE_KM = {
+  'Borivali':  { 'Churchgate': 46, 'Bandra W': 28, 'Kurla': 36, 'Sion': 38, 'Andheri E': 18 },
+  'Goregaon':  { 'Churchgate': 38, 'Bandra W': 20, 'Kurla': 28, 'Sion': 30, 'Andheri E': 10 },
+  'Andheri W': { 'Churchgate': 28, 'Bandra W': 12, 'Kurla': 20, 'Sion': 22, 'Andheri E':  6 },
+  'Andheri E': { 'Churchgate': 30, 'Bandra W': 16, 'Kurla': 12, 'Sion': 16, 'Andheri E':  2 },
+  'Powai':     { 'Churchgate': 34, 'Bandra W': 22, 'Kurla': 10, 'Sion': 14, 'Andheri E': 12 },
+  'Thane':     { 'Churchgate': 32, 'Bandra W': 28, 'Kurla': 18, 'Sion': 22, 'Andheri E': 20 },
+};
+
+// Intermediate stops per route type for each origin → destination
+const ROUTE_STOPS = {
+  highway: {
+    'Borivali':  { 'Churchgate': ['Andheri W','Bandra W'], 'Bandra W': ['Andheri W'],      'Kurla': ['Andheri E'],        'Sion': ['Andheri E'],          'Andheri E': []            },
+    'Goregaon':  { 'Churchgate': ['Andheri W','Bandra W'], 'Bandra W': ['Andheri W'],      'Kurla': ['Andheri E'],        'Sion': ['Andheri E'],          'Andheri E': []            },
+    'Andheri W': { 'Churchgate': ['Bandra W'],             'Bandra W': [],                 'Kurla': ['Andheri E'],        'Sion': ['Andheri E'],          'Andheri E': []            },
+    'Andheri E': { 'Churchgate': ['Bandra W'],             'Bandra W': ['Sion'],           'Kurla': [],                   'Sion': [],                     'Andheri E': []            },
+    'Powai':     { 'Churchgate': ['Kurla','Bandra W'],     'Bandra W': ['Kurla'],           'Kurla': [],                  'Sion': ['Kurla'],              'Andheri E': []            },
+    'Thane':     { 'Churchgate': ['Powai','Andheri E'],    'Bandra W': ['Powai','Kurla'],   'Kurla': ['Powai'],            'Sion': ['Powai'],              'Andheri E': ['Powai']     },
   },
-  {
-    id: 'tr2', name: 'City Road', color: '#e67e22',
-    stops: ['Thane', 'Kurla', 'Bandra W', 'Churchgate'],
-    distance: '38 km', time: '65 min', baseFare: 310, toll: 0, total: 310,
+  city: {
+    'Borivali':  { 'Churchgate': ['Goregaon','Andheri W','Mahim'],    'Bandra W': ['Goregaon','Andheri W'],   'Kurla': ['Goregaon','Andheri E'],   'Sion': ['Goregaon','Andheri E','Kurla'],  'Andheri E': ['Goregaon']         },
+    'Goregaon':  { 'Churchgate': ['Andheri W','Mahim'],               'Bandra W': ['Andheri W'],              'Kurla': ['Andheri W','Andheri E'],  'Sion': ['Andheri E','Kurla'],            'Andheri E': ['Andheri W']        },
+    'Andheri W': { 'Churchgate': ['Mahim','Dadar'],                   'Bandra W': ['Mahim'],                  'Kurla': ['Andheri E'],              'Sion': ['Andheri E','Kurla'],            'Andheri E': ['JVLR']             },
+    'Andheri E': { 'Churchgate': ['Sion','Dadar'],                    'Bandra W': ['Sion','Mahim'],           'Kurla': ['JVLR'],                   'Sion': [],                               'Andheri E': []                   },
+    'Powai':     { 'Churchgate': ['Andheri E','Sion','Dadar'],        'Bandra W': ['Kurla','Sion'],           'Kurla': ['JVLR'],                   'Sion': ['Kurla'],                        'Andheri E': ['JVLR']             },
+    'Thane':     { 'Churchgate': ['Kurla','Sion','Dadar'],            'Bandra W': ['Kurla','Sion','Mahim'],   'Kurla': ['Mulund'],                 'Sion': ['Kurla'],                        'Andheri E': ['Mulund','Kurla']   },
   },
-  {
-    id: 'tr3', name: 'Bypass Route', color: '#8e44ad',
-    stops: ['Thane', 'Powai', 'Kurla', 'Sion', 'Churchgate'],
-    distance: '42 km', time: '55 min', baseFare: 340, toll: 30, total: 370,
+  bypass: {
+    'Borivali':  { 'Churchgate': ['Goregaon','Powai','Kurla'],  'Bandra W': ['Powai','Kurla'],  'Kurla': ['Powai'],       'Sion': ['Powai','Kurla'],   'Andheri E': ['Powai']        },
+    'Goregaon':  { 'Churchgate': ['Powai','Kurla','Sion'],      'Bandra W': ['Powai','Kurla'],  'Kurla': ['Powai'],       'Sion': ['Powai','Kurla'],   'Andheri E': ['Powai']        },
+    'Andheri W': { 'Churchgate': ['Kurla','Sion'],              'Bandra W': ['Kurla','Mahim'],  'Kurla': ['Powai'],       'Sion': ['Powai','Kurla'],   'Andheri E': ['Powai']        },
+    'Andheri E': { 'Churchgate': ['Powai','Kurla','Sion'],      'Bandra W': ['Powai','Sion'],   'Kurla': ['Powai'],       'Sion': ['Powai'],           'Andheri E': []               },
+    'Powai':     { 'Churchgate': ['Thane','Kurla','Sion'],      'Bandra W': ['Thane','Sion'],   'Kurla': ['Thane'],       'Sion': ['Thane','Kurla'],   'Andheri E': ['Thane']        },
+    'Thane':     { 'Churchgate': ['Andheri E','Kurla','Sion'],  'Bandra W': ['Andheri E','Sion'], 'Kurla': ['Andheri E'],'Sion': ['Andheri E'],       'Andheri E': ['Mulund']       },
   },
-];
+};
+
+// ── Dynamic route calculator ─────────────────────────────────────────────────
+export function getRoutesForTrip(from, to) {
+  const baseKm  = TRIP_BASE_KM[from]?.[to] ?? 25;
+  const PER_KM  = 8;  // ₹8 per km base fare
+
+  // Express Highway  — shorter, fastest, has toll
+  const hwyKm   = baseKm;
+  const hwyTime = Math.round(hwyKm * 1.1);
+  const hwyBase = Math.round(hwyKm * PER_KM);
+  const hwyToll = hwyKm >= 20 ? 60 : hwyKm >= 10 ? 30 : 0;
+  const hwyMid  = ROUTE_STOPS.highway[from]?.[to] ?? [];
+
+  // City Road  — longer, slowest, toll-free
+  const cityKm   = Math.round(hwyKm * 1.22);
+  const cityTime = Math.round(hwyKm * 1.85);
+  const cityBase = Math.round(cityKm * PER_KM);
+  const cityMid  = ROUTE_STOPS.city[from]?.[to] ?? [];
+
+  // Bypass  — medium distance, medium speed, small toll
+  const bypassKm   = Math.round(hwyKm * 1.38);
+  const bypassTime = Math.round(hwyKm * 1.45);
+  const bypassBase = Math.round(bypassKm * PER_KM);
+  const bypassToll = hwyKm >= 20 ? 30 : hwyKm >= 10 ? 15 : 0;
+  const bypassMid  = ROUTE_STOPS.bypass[from]?.[to] ?? [];
+
+  return [
+    {
+      id: 'tr1', name: 'Express Highway', color: '#27ae60',
+      stops: [from, ...hwyMid, to],
+      distance: `${hwyKm} km`, time: `${hwyTime} min`,
+      baseFare: hwyBase, toll: hwyToll, total: hwyBase + hwyToll,
+    },
+    {
+      id: 'tr2', name: 'City Road', color: '#e67e22',
+      stops: [from, ...cityMid, to],
+      distance: `${cityKm} km`, time: `${cityTime} min`,
+      baseFare: cityBase, toll: 0, total: cityBase,
+    },
+    {
+      id: 'tr3', name: 'Bypass Route', color: '#8e44ad',
+      stops: [from, ...bypassMid, to],
+      distance: `${bypassKm} km`, time: `${bypassTime} min`,
+      baseFare: bypassBase, toll: bypassToll, total: bypassBase + bypassToll,
+    },
+  ];
+}
+
+// Keep static export for backward compatibility
+export const TOLL_ROUTES = getRoutesForTrip('Thane', 'Churchgate');
 
 export const PASSENGER_LOCATIONS = [
   { name: 'Priya Sharma',  area: 'Andheri East', lat: '19.1136° N', lng: '72.8697° E', latNum: 19.1136, lngNum: 72.8697, status: 'Ready',   gender: 'female', mapX: 270, mapY: 215 },

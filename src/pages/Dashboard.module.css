@@ -82,11 +82,11 @@
   display: flex;
   flex-direction: column;
   gap: 7px;
-  cursor: default;
-  transition: box-shadow 0.25s, transform 0.25s;
+  transition: box-shadow 0.25s, transform 0.25s, border-color 0.25s;
   border-top: 3px solid var(--accent-color, #9E6752);
   position: relative;
   overflow: hidden;
+  user-select: none;
 }
 .statCard::before {
   content: '';
@@ -102,6 +102,12 @@
   box-shadow: 0 10px 32px rgba(32,33,43,0.13);
   transform: translateY(-4px);
 }
+.statCardActive {
+  border-color: var(--accent-color, #9E6752) !important;
+  box-shadow: 0 8px 28px rgba(32,33,43,0.15), 0 0 0 3px rgba(158,103,82,0.12) !important;
+  background: rgba(255,255,255,0.75) !important;
+}
+.statChevron { display: flex; align-items: center; transition: transform 0.25s; }
 
 .statTop { display: flex; align-items: center; justify-content: space-between; }
 .statIconWrap {
@@ -119,6 +125,116 @@
 .statLabel { font-size: 0.75rem; font-weight: 500; color: #73766A; }
 .statBar { height: 3px; border-radius: 99px; overflow: hidden; margin-top: 2px; background: rgba(0,0,0,0.06); }
 .statBarFill { height: 100%; border-radius: 99px; }
+
+/* ── Expand Panels ───────────────────────────────────────────── */
+.expandPanel { overflow: hidden; }
+.panelInner {
+  background: rgba(255,255,255,0.72);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255,255,255,0.8);
+  border-radius: 20px;
+  padding: 20px 22px;
+  box-shadow: 0 4px 24px rgba(32,33,43,0.09);
+}
+.panelHeader {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 16px;
+}
+.panelTitle {
+  font-size: 0.9rem; font-weight: 700; color: #20212B;
+  flex: 1;
+}
+.panelCount {
+  font-size: 0.68rem; font-weight: 700;
+  background: rgba(158,103,82,0.1); color: #9E6752;
+  border: 1px solid rgba(158,103,82,0.2);
+  padding: 3px 10px; border-radius: 99px;
+}
+
+/* Pending Requests */
+.requestList { display: flex; flex-direction: column; gap: 8px; }
+.requestRow {
+  display: flex; align-items: center; gap: 12px;
+  padding: 11px 14px;
+  background: rgba(255,255,255,0.5);
+  border: 1px solid rgba(255,255,255,0.7);
+  border-radius: 13px;
+  transition: background 0.2s;
+  overflow: hidden;
+}
+.requestRow:hover { background: rgba(255,255,255,0.78); }
+.requestAvatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: linear-gradient(135deg, #9E6752, #2D4354);
+  color: #fff; font-size: 0.72rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.requestInfo { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.requestName { font-size: 0.84rem; font-weight: 700; color: #20212B; }
+.requestRoute {
+  display: flex; align-items: center; gap: 4px;
+  font-size: 0.72rem; color: #73766A;
+}
+.requestTime { font-size: 0.66rem; color: #9E6752; font-weight: 500; }
+.requestActions { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+.approveBtn {
+  display: flex; align-items: center; gap: 5px;
+  background: linear-gradient(135deg, #27ae60, #1e8449);
+  color: #fff; border: none; border-radius: 8px;
+  padding: 6px 12px; font-size: 0.75rem; font-weight: 700;
+  cursor: pointer; transition: opacity 0.2s, transform 0.15s;
+  white-space: nowrap;
+}
+.approveBtn:hover { opacity: 0.88; }
+.rejectBtn {
+  display: flex; align-items: center; justify-content: center;
+  width: 30px; height: 30px;
+  background: rgba(231,76,60,0.1);
+  color: #e74c3c;
+  border: 1px solid rgba(231,76,60,0.2);
+  border-radius: 8px;
+  cursor: pointer; transition: background 0.2s;
+}
+.rejectBtn:hover { background: rgba(231,76,60,0.2); }
+
+/* Active Carpools */
+.carpoolList { display: flex; flex-direction: column; gap: 7px; }
+.carpoolRow {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 14px;
+  background: rgba(255,255,255,0.5);
+  border: 1px solid rgba(255,255,255,0.7);
+  border-radius: 12px;
+  transition: background 0.2s;
+}
+.carpoolRow:hover { background: rgba(255,255,255,0.78); }
+.carpoolStatus {
+  padding: 4px 10px; border-radius: 99px;
+  border: 1px solid transparent;
+  flex-shrink: 0;
+}
+.carpoolInfo { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.carpoolRoute { font-size: 0.84rem; font-weight: 700; color: #20212B; }
+.carpoolMeta {
+  display: flex; align-items: center; gap: 4px;
+  font-size: 0.71rem; color: #73766A;
+}
+
+.emptyState {
+  text-align: center; padding: 20px;
+  color: #27ae60; font-size: 0.86rem; font-weight: 600;
+}
+
+.panelFooterLink {
+  display: flex; align-items: center; gap: 5px; justify-content: flex-end;
+  margin-top: 14px;
+  font-size: 0.76rem; font-weight: 600; color: #9E6752;
+  text-decoration: none;
+  transition: gap 0.2s;
+}
+.panelFooterLink:hover { gap: 8px; }
 
 /* ── Bottom two-column layout ────────────────────────────────── */
 .mainGrid {

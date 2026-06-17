@@ -19,7 +19,7 @@
 
 **CarpoolFlow** is a full-featured smart ride-sharing web application built as a React.js semester final project. It demonstrates real-world application of core React concepts including Hooks, Context API, reducers, memoisation, lazy loading, and persistent state — all wrapped in a premium, dark-themed UI with glass-morphism design.
 
-The app allows users to book rides, manage a FIFO request queue, track price changes with undo history, analyse eco impact, earn reward points, and find passengers on an interactive map — all with **live, cross-page data synchronisation** via a shared context store.
+The app allows users to book rides, manage a FIFO request queue, track price changes with undo history, analyse eco impact, earn reward points, find passengers on an interactive map, and plan routes using a smart **Toll Cost Planner** — all with **live, cross-page data synchronisation** via a shared context store.
 
 ---
 
@@ -50,9 +50,18 @@ The app allows users to book rides, manage a FIFO request queue, track price cha
 ### 📊 Dashboard
 - Time-aware greeting (`Good morning / afternoon / evening`)
 - Live stats grid: Total Rides, Available Drivers, Pending Requests, Money Saved, Active Carpools, Reward Points
+- **All 6 stat cards are now interactive:**
+  - 🚗 **Total Rides** → navigates to Ride History
+  - 👥 **Available Drivers** → navigates to Location Finder
+  - ⏰ **Pending Requests** → expands inline approve/reject panel (count updates live)
+  - 💰 **Money Saved** → navigates to Price Log
+  - 🏎️ **Active Carpools** → expands inline live carpools panel
+  - 🏆 **Reward Points** → navigates to Rewards
+- **Pending Requests panel** — shows all pending ride requests with Approve ✅ / Reject ❌ buttons; count badge on stat card decrements instantly on each action
+- **Active Carpools panel** — shows all 7 live carpools with status badges (En route / Picking up / Scheduled), driver, seats, ETA
 - Available Drivers fetched from a live API (`dummyjson.com`) using `useEffect`
 - Recent Activity feed
-- Quick-action cards for every major feature
+- **All 6 Quick Action cards** navigate to their respective pages: Request Ride, Find Passenger, City Map, Eco Impact, My Rewards, Ride History
 
 ### 🗂️ Ride History
 - Full history of all past rides (including rides booked via Queue)
@@ -106,8 +115,40 @@ The app allows users to book rides, manage a FIFO request queue, track price cha
 - Drag-and-drop style seat assignment UI
 - Allocates passengers to available seats
 
-### 🅿️ Pickup Planner & Toll Planner
-- Route planning utilities with stop management
+### 🗺️ Pickup Planner
+- Route planning utility with stop management
+- Now accessible from the sidebar navigation
+
+### 💵 Toll Cost Planner *(updated — now fully dynamic)*
+- **Smart route comparison** across 3 route types per trip:
+  - 🟢 **Express Highway** — shortest distance, fastest, paid toll (₹30–₹60 based on distance)
+  - 🟠 **City Road** — longer, slowest, completely toll-free
+  - 🟣 **Bypass Route** — medium distance, medium speed, small toll (₹15–₹30)
+- **Accurate, per-pair pricing** — each origin → destination combination shows unique distances, travel times, toll costs, and intermediate stops based on a real Mumbai road-distance lookup table (`TRIP_BASE_KM`)
+- **Dynamic stop sequences** — highway, city, and bypass routes each show geographically correct intermediate stops (e.g. Thane → Churchgate via Express Highway shows Powai, Andheri E)
+- **⚡ Cheapest badge** auto-highlights the lowest-cost route; savings vs most expensive is shown
+- **Animated route cards** — staggered entrance, hover lift, click-to-select highlight
+- Accessible from the **sidebar** under "Toll Planner" (`BadgeDollarSign` icon)
+
+---
+
+## 🛠️ Changes Made — June 17, 2026
+
+### Bug Fixes
+
+| Issue | Fix |
+|---|---|
+| Toll Planner & Pickup Planner not visible in app | Added both to `Sidebar.jsx` `NAV_ITEMS` with correct icons (`BadgeDollarSign`, `Navigation`) |
+| Toll Planner showed identical prices for every destination | Replaced static `TOLL_ROUTES` array with dynamic `getRoutesForTrip(from, to)` function |
+| Pending Requests count not updating on approve/reject | Lifted `dismissed` state to Dashboard so `allRequests.length` drives the badge directly |
+| Only 2 of 6 stat cards were interactive | All 6 stat cards now have `onClick` — 4 navigate to pages, 2 expand detail panels |
+
+### Enhancements
+
+- **`mockData.js`** — Added `TRIP_BASE_KM` distance table (6 origins × 5 destinations), `ROUTE_STOPS` lookup (highway / city / bypass intermediate stops), and exported `getRoutesForTrip(from, to)` function
+- **`TollPlanner.jsx`** — Now stores computed routes in `useState`, calls `getRoutesForTrip` on every search, uses `from-to` as animation key so cards re-animate on destination change
+- **`Dashboard.jsx`** — `dismissed` and `allRequests` lifted to top-level component; `PendingRequestsPanel` receives props instead of managing its own dismissed state; all 6 stat cards get `onClick`; `useNavigate` used for navigation cards; `useCallback` wraps `handleApprove` and `handleReject`
+- **`Dashboard.module.css`** — Added `.statCardActive`, `.statChevron`, `.expandPanel`, `.panelInner`, `.requestRow`, `.approveBtn`, `.rejectBtn`, `.carpoolRow`, `.carpoolStatus`, `.panelFooterLink` styles
 
 ---
 
@@ -117,13 +158,14 @@ The app allows users to book rides, manage a FIFO request queue, track price cha
 |---|---|
 | `useState` | Forms, toggles, local UI state across all pages |
 | `useEffect` | API fetch in Dashboard, localStorage sync in RideContext |
-| `useMemo` | Filtered rides in RideHistory, eco stats in EcoScore |
+| `useMemo` | Filtered rides in RideHistory, eco stats in EcoScore, `allRequests` in Dashboard |
 | `useReducer` | `RideContext` — manages rides, queue, price, points, eco data |
 | `useContext` | `useRide()`, `useAuth()`, `useTheme()` custom hooks |
-| `useCallback` | Event handlers in Dashboard driver list |
-| `React.memo` | Driver card component in Dashboard |
+| `useCallback` | `handleApprove`, `handleReject` in Dashboard |
+| `useNavigate` | Stat card navigation in Dashboard |
+| `React.memo` | `StatCard`, `DriverCard` components in Dashboard |
 | `React.lazy` + `Suspense` | All 14 pages are code-split |
-| `AnimatePresence` | Page transitions, list enter/exit animations |
+| `AnimatePresence` | Page transitions, list enter/exit animations, panel expand/collapse |
 | `localStorage` | Auth state + entire ride state persisted across sessions |
 | CSS Modules | Scoped styles for every page and component |
 
@@ -139,7 +181,7 @@ react_finalproject/
 │   │   └── common/
 │   │       ├── Layout.jsx          # App shell with sidebar + footer
 │   │       ├── Layout.module.css
-│   │       ├── Sidebar.jsx         # Collapsible navigation sidebar
+│   │       ├── Sidebar.jsx         # Collapsible navigation sidebar (14 items)
 │   │       ├── Sidebar.module.css
 │   │       ├── BottomNav.jsx       # Mobile bottom navigation
 │   │       └── ProtectedRoute.jsx  # Auth guard
@@ -152,7 +194,7 @@ react_finalproject/
 │   ├── pages/
 │   │   ├── Login.jsx / .module.css
 │   │   ├── Register.jsx / .module.css
-│   │   ├── Dashboard.jsx / .module.css
+│   │   ├── Dashboard.jsx / .module.css   # Interactive stat cards + expand panels
 │   │   ├── RideHistory.jsx / .module.css
 │   │   ├── PriceChangeLog.jsx / .module.css
 │   │   ├── RideQueue.jsx / .module.css
@@ -160,15 +202,15 @@ react_finalproject/
 │   │   ├── SeatSorter.jsx / .module.css
 │   │   ├── CityMap.jsx / .module.css
 │   │   ├── PickupPlanner.jsx / .module.css
-│   │   ├── TollPlanner.jsx / .module.css
+│   │   ├── TollPlanner.jsx / .module.css  # Dynamic per-route pricing
 │   │   ├── EcoScore.jsx / .module.css
 │   │   ├── Rewards.jsx / .module.css
 │   │   └── Profile.jsx / .module.css
 │   ├── styles/
 │   │   └── global.css              # Design tokens, glass-card, buttons, inputs
 │   ├── utils/
-│   │   └── mockData.js             # Map nodes, edges, mock passengers
-│   ├── App.jsx                     # Router + lazy-loaded routes
+│   │   └── mockData.js             # Map nodes, edges, TRIP_BASE_KM, getRoutesForTrip()
+│   ├── App.jsx                     # Router + lazy-loaded routes (14 pages)
 │   └── main.jsx                    # React DOM entry point
 ├── index.html
 ├── vite.config.js
@@ -176,7 +218,6 @@ react_finalproject/
 └── README.md
 ```
 
----
 ---
 
 ## 🚀 Setup Instructions
@@ -242,7 +283,7 @@ Or click **"Create Account"** to register a new user.
 ## 🔄 Data Flow
 
 ```
-User action (e.g. "Process Next" in Ride Queue)
+User action (e.g. "Process Next" in Ride Queue  OR  "Approve" in Dashboard panel)
         │
         ▼
 dispatch({ type: 'PROCESS_REQUEST' })
@@ -250,6 +291,7 @@ dispatch({ type: 'PROCESS_REQUEST' })
         ▼
 rideReducer updates:
   ├── rides[]            → Ride History updates
+  ├── requestQueue[]     → Pending Requests count badge decrements
   ├── points + 80        → Rewards & Profile update
   ├── totalCo2Saved      → Eco Score updates
   ├── weeklyEco[today]   → Bar chart updates
@@ -266,14 +308,17 @@ All consuming components re-render instantly via useContext
 
 ## 🧪 Testing the Live Data Flow
 
-1. Go to **Ride Queue** (`/queue`)
-2. Add a request: name → pickup → drop → **Enqueue Request**
-3. Click **Process Next**
-4. Observe the green toast: *"✅ Ride saved! +80 pts • +2.4 kg CO₂ tracked"*
-5. Navigate to **Ride History** → the ride appears at the top
-6. Navigate to **Eco Score** → today's bar has grown
-7. Navigate to **Profile → Activity** → points and ride count updated
-8. Refresh the page → all data persists from `localStorage`
+1. Go to **Dashboard** (`/dashboard`)
+2. Click the **Pending Requests** stat card → panel expands
+3. Click **Approve** on any request → count badge decrements, row animates out
+4. Navigate to **Ride History** → the approved ride appears at the top
+5. Navigate to **Toll Planner** → select different **From / To** pairs and click **Find Routes** — prices, distances, and stops change per route
+6. Go to **Ride Queue** (`/queue`)
+7. Add a request: name → pickup → drop → **Enqueue Request**
+8. Click **Process Next** → green toast confirms *"✅ Ride saved! +80 pts • +2.4 kg CO₂ tracked"*
+9. Navigate to **Eco Score** → today's bar has grown
+10. Navigate to **Profile → Activity** → points and ride count updated
+11. Refresh the page → all data persists from `localStorage`
 
 ---
 

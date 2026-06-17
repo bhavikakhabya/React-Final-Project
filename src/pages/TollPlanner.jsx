@@ -1,24 +1,42 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { DollarSign, CheckCircle } from 'lucide-react';
-import { TOLL_ROUTES } from '../utils/mockData';
+import { DollarSign } from 'lucide-react';
+import { getRoutesForTrip } from '../utils/mockData';
 import styles from './TollPlanner.module.css';
 
-export default function TollPlanner() {
-  const [selectedRoute, setSelectedRoute] = useState(null);
-  const [from, setFrom] = useState('Thane');
-  const [to, setTo] = useState('Churchgate');
-  const [searched, setSearched] = useState(false);
+const FROM_CITIES = ['Borivali', 'Goregaon', 'Andheri W', 'Andheri E', 'Powai', 'Thane'];
+const TO_CITIES   = ['Churchgate', 'Bandra W', 'Kurla', 'Sion', 'Andheri E'];
 
-  const cheapest = searched
-    ? TOLL_ROUTES.reduce((min, r) => r.total < min.total ? r : min, TOLL_ROUTES[0])
+export default function TollPlanner() {
+  const [from, setFrom]               = useState('Thane');
+  const [to, setTo]                   = useState('Churchgate');
+  const [routes, setRoutes]           = useState([]);
+  const [selectedRoute, setSelectedRoute] = useState(null);
+  const [searched, setSearched]       = useState(false);
+
+  const handleSearch = () => {
+    const computed = getRoutesForTrip(from, to);
+    setRoutes(computed);
+    setSelectedRoute(null);
+    setSearched(true);
+  };
+
+  const cheapest = routes.length
+    ? routes.reduce((min, r) => r.total < min.total ? r : min, routes[0])
     : null;
+
+  const maxTotal = routes.length ? Math.max(...routes.map(r => r.total)) : 0;
 
   return (
     <div>
       <div className="page-header">
-        <h1 className="page-title"><DollarSign size={24} style={{ verticalAlign:'middle', marginRight:8 }} />Toll Cost Planner</h1>
-        <p className="page-subtitle">Compare routes and find the cheapest path — route cost analysis with useState</p>
+        <h1 className="page-title">
+          <DollarSign size={24} style={{ verticalAlign: 'middle', marginRight: 8 }} />
+          Toll Cost Planner
+        </h1>
+        <p className="page-subtitle">
+          Compare routes and find the cheapest path — prices update per origin &amp; destination
+        </p>
       </div>
 
       {/* Route Selector */}
@@ -26,22 +44,34 @@ export default function TollPlanner() {
         <div className={styles.selects}>
           <div className="input-wrap">
             <label className="input-label">From</label>
-            <select className="input-field" value={from} onChange={e => { setFrom(e.target.value); setSearched(false); }}>
-              {['Borivali','Goregaon','Andheri W','Andheri E','Powai','Thane'].map(c => <option key={c}>{c}</option>)}
+            <select
+              className="input-field"
+              value={from}
+              onChange={e => { setFrom(e.target.value); setSearched(false); }}
+            >
+              {FROM_CITIES.map(c => <option key={c}>{c}</option>)}
             </select>
           </div>
+
           <div className={styles.arrow}>→</div>
+
           <div className="input-wrap">
             <label className="input-label">To</label>
-            <select className="input-field" value={to} onChange={e => { setTo(e.target.value); setSearched(false); }}>
-              {['Churchgate','Bandra W','Kurla','Sion','Andheri E'].map(c => <option key={c}>{c}</option>)}
+            <select
+              className="input-field"
+              value={to}
+              onChange={e => { setTo(e.target.value); setSearched(false); }}
+            >
+              {TO_CITIES.map(c => <option key={c}>{c}</option>)}
             </select>
           </div>
+
           <motion.button
             className="btn btn-primary"
             style={{ alignSelf: 'flex-end' }}
-            onClick={() => { setSearched(true); setSelectedRoute(null); }}
+            onClick={handleSearch}
             whileTap={{ scale: 0.97 }}
+            disabled={from === to}
           >
             Find Routes
           </motion.button>
@@ -50,13 +80,15 @@ export default function TollPlanner() {
 
       {/* Route Cards */}
       <AnimatePresence mode="wait">
-        {searched && (
+        {searched && routes.length > 0 && (
           <motion.div
-            key="routes"
-            initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+            key={`${from}-${to}`}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
             className={styles.routesGrid}
           >
-            {TOLL_ROUTES.map((route, i) => {
+            {routes.map((route, i) => {
               const isCheapest = route.id === cheapest?.id;
               const isSelected = selectedRoute?.id === route.id;
               return (
@@ -70,7 +102,10 @@ export default function TollPlanner() {
                   whileHover={{ scale: 1.02, y: -3 }}
                 >
                   {isCheapest && <div className={styles.cheapestBadge}>⚡ Cheapest</div>}
-                  <div className={styles.routeName} style={{ color: route.color }}>{route.name}</div>
+
+                  <div className={styles.routeName} style={{ color: route.color }}>
+                    {route.name}
+                  </div>
 
                   {/* Stops visualization */}
                   <div className={styles.stops}>
@@ -80,15 +115,31 @@ export default function TollPlanner() {
                   </div>
 
                   <div className={styles.routeStats}>
-                    <div className={styles.statItem}><span>Distance</span><strong>{route.distance}</strong></div>
-                    <div className={styles.statItem}><span>Time</span><strong>{route.time}</strong></div>
-                    <div className={styles.statItem}><span>Toll</span><strong style={{ color: route.toll > 0 ? '#e67e22' : '#27ae60' }}>₹{route.toll}</strong></div>
-                    <div className={styles.statItem}><span>Total Fare</span><strong style={{ fontSize: '1.1rem', color: isCheapest ? '#27ae60' : '#190019' }}>₹{route.total}</strong></div>
+                    <div className={styles.statItem}>
+                      <span>Distance</span>
+                      <strong>{route.distance}</strong>
+                    </div>
+                    <div className={styles.statItem}>
+                      <span>Time</span>
+                      <strong>{route.time}</strong>
+                    </div>
+                    <div className={styles.statItem}>
+                      <span>Toll</span>
+                      <strong style={{ color: route.toll > 0 ? '#e67e22' : '#27ae60' }}>
+                        {route.toll > 0 ? `₹${route.toll}` : 'Free'}
+                      </strong>
+                    </div>
+                    <div className={styles.statItem}>
+                      <span>Total Fare</span>
+                      <strong style={{ fontSize: '1.1rem', color: isCheapest ? '#27ae60' : '#190019' }}>
+                        ₹{route.total}
+                      </strong>
+                    </div>
                   </div>
 
                   {isCheapest && (
                     <div className={styles.savings}>
-                      💰 Saves ₹{Math.max(...TOLL_ROUTES.map(r => r.total)) - route.total} vs most expensive
+                      💰 Saves ₹{maxTotal - route.total} vs most expensive
                     </div>
                   )}
                 </motion.div>
@@ -101,7 +152,7 @@ export default function TollPlanner() {
       {!searched && (
         <div className={styles.placeholder}>
           <DollarSign size={40} color="#DFB6B2" />
-          <p>Select your origin & destination, then click <strong>Find Routes</strong></p>
+          <p>Select your origin &amp; destination, then click <strong>Find Routes</strong></p>
         </div>
       )}
     </div>
