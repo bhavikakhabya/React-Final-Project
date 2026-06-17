@@ -2,14 +2,8 @@
 
 # 🚗 CarpoolFlow
 
-### Smart Ride-Sharing Platform — React.js Final Project
+### Smart Ride-Sharing Platform 
 
-**Semester II · Bhavika Khabya**
-
-[![React](https://img.shields.io/badge/React-19.2-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
-[![Vite](https://img.shields.io/badge/Vite-8.0-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vite.dev)
-[![Framer Motion](https://img.shields.io/badge/Framer_Motion-12.4-0055FF?style=for-the-badge&logo=framer&logoColor=white)](https://www.framer.com/motion)
-[![React Router](https://img.shields.io/badge/React_Router-7.0-CA4245?style=for-the-badge&logo=reactrouter&logoColor=white)](https://reactrouter.com)
 
 </div>
 
@@ -18,8 +12,6 @@
 ## 📖 Project Description
 
 **CarpoolFlow** is a full-featured smart ride-sharing web application built as a React.js semester final project. It demonstrates real-world application of core React concepts including Hooks, Context API, reducers, memoisation, lazy loading, and persistent state — all wrapped in a premium, dark-themed UI with glass-morphism design.
-
-The app allows users to book rides, manage a FIFO request queue, track price changes with undo history, analyse eco impact, earn reward points, find passengers on an interactive map, and plan routes using a smart **Toll Cost Planner** — all with **live, cross-page data synchronisation** via a shared context store.
 
 ---
 
@@ -30,13 +22,7 @@ The app allows users to book rides, manage a FIFO request queue, track price cha
 | **Framework** | React 19.2 (with JSX) |
 | **Build Tool** | Vite 8.0 |
 | **Routing** | React Router DOM 7.0 |
-| **Animations** | Framer Motion 12.4 |
-| **Icons** | Lucide React |
 | **Styling** | CSS Modules + Vanilla CSS (no Tailwind) |
-| **State** | Context API + useReducer |
-| **Persistence** | localStorage (via useEffect) |
-| **Font** | Plus Jakarta Sans (Google Fonts) |
-| **Linting** | ESLint + React Hooks Plugin |
 
 ---
 
@@ -57,11 +43,6 @@ The app allows users to book rides, manage a FIFO request queue, track price cha
   - 💰 **Money Saved** → navigates to Price Log
   - 🏎️ **Active Carpools** → expands inline live carpools panel
   - 🏆 **Reward Points** → navigates to Rewards
-- **Pending Requests panel** — shows all pending ride requests with Approve ✅ / Reject ❌ buttons; count badge on stat card decrements instantly on each action
-- **Active Carpools panel** — shows all 7 live carpools with status badges (En route / Picking up / Scheduled), driver, seats, ETA
-- Available Drivers fetched from a live API (`dummyjson.com`) using `useEffect`
-- Recent Activity feed
-- **All 6 Quick Action cards** navigate to their respective pages: Request Ride, Find Passenger, City Map, Eco Impact, My Rewards, Ride History
 
 ### 🗂️ Ride History
 - Full history of all past rides (including rides booked via Queue)
@@ -124,81 +105,6 @@ The app allows users to book rides, manage a FIFO request queue, track price cha
   - 🟢 **Express Highway** — shortest distance, fastest, paid toll (₹30–₹60 based on distance)
   - 🟠 **City Road** — longer, slowest, completely toll-free
   - 🟣 **Bypass Route** — medium distance, medium speed, small toll (₹15–₹30)
-- **Accurate, per-pair pricing** — each origin → destination combination shows unique distances, travel times, toll costs, and intermediate stops based on a real Mumbai road-distance lookup table (`TRIP_BASE_KM`)
-- **Dynamic stop sequences** — highway, city, and bypass routes each show geographically correct intermediate stops (e.g. Thane → Churchgate via Express Highway shows Powai, Andheri E)
-- **⚡ Cheapest badge** auto-highlights the lowest-cost route; savings vs most expensive is shown
-- **Animated route cards** — staggered entrance, hover lift, click-to-select highlight
-- Accessible from the **sidebar** under "Toll Planner" (`BadgeDollarSign` icon)
-
----
-
----
-
-## 🪝 React Concepts Demonstrated
-
-| Hook / Concept | Where Used |
-|---|---|
-| `useState` | Forms, toggles, local UI state across all pages |
-| `useEffect` | API fetch in Dashboard, localStorage sync in RideContext |
-| `useMemo` | Filtered rides in RideHistory, eco stats in EcoScore, `allRequests` in Dashboard |
-| `useReducer` | `RideContext` — manages rides, queue, price, points, eco data |
-| `useContext` | `useRide()`, `useAuth()`, `useTheme()` custom hooks |
-| `useCallback` | `handleApprove`, `handleReject` in Dashboard |
-| `useNavigate` | Stat card navigation in Dashboard |
-| `React.memo` | `StatCard`, `DriverCard` components in Dashboard |
-| `React.lazy` + `Suspense` | All 14 pages are code-split |
-| `AnimatePresence` | Page transitions, list enter/exit animations, panel expand/collapse |
-| `localStorage` | Auth state + entire ride state persisted across sessions |
-| CSS Modules | Scoped styles for every page and component |
-
----
-
-## 📁 Project Structure
-
-```
-react_finalproject/
-├── public/
-├── src/
-│   ├── components/
-│   │   └── common/
-│   │       ├── Layout.jsx          # App shell with sidebar + footer
-│   │       ├── Layout.module.css
-│   │       ├── Sidebar.jsx         # Collapsible navigation sidebar (14 items)
-│   │       ├── Sidebar.module.css
-│   │       ├── BottomNav.jsx       # Mobile bottom navigation
-│   │       └── ProtectedRoute.jsx  # Auth guard
-│   ├── context/
-│   │   ├── AuthContext.jsx         # Login / Register / user state
-│   │   ├── RideContext.jsx         # Core reducer (rides, queue, price, points, eco)
-│   │   └── ThemeContext.jsx        # Sidebar collapse state
-│   ├── hooks/
-│   │   └── useLocalStorage.js      # Generic localStorage hook
-│   ├── pages/
-│   │   ├── Login.jsx / .module.css
-│   │   ├── Register.jsx / .module.css
-│   │   ├── Dashboard.jsx / .module.css   # Interactive stat cards + expand panels
-│   │   ├── RideHistory.jsx / .module.css
-│   │   ├── PriceChangeLog.jsx / .module.css
-│   │   ├── RideQueue.jsx / .module.css
-│   │   ├── LocationFinder.jsx / .module.css
-│   │   ├── SeatSorter.jsx / .module.css
-│   │   ├── CityMap.jsx / .module.css
-│   │   ├── PickupPlanner.jsx / .module.css
-│   │   ├── TollPlanner.jsx / .module.css  # Dynamic per-route pricing
-│   │   ├── EcoScore.jsx / .module.css
-│   │   ├── Rewards.jsx / .module.css
-│   │   └── Profile.jsx / .module.css
-│   ├── styles/
-│   │   └── global.css              # Design tokens, glass-card, buttons, inputs
-│   ├── utils/
-│   │   └── mockData.js             # Map nodes, edges, TRIP_BASE_KM, getRoutesForTrip()
-│   ├── App.jsx                     # Router + lazy-loaded routes (14 pages)
-│   └── main.jsx                    # React DOM entry point
-├── index.html
-├── vite.config.js
-├── package.json
-└── README.md
-```
 
 ---
 
@@ -241,19 +147,6 @@ Email:    demo@carpoolflow.com
 Password: demo123
 ```
 
-Or click **"Create Account"** to register a new user.
-
----
-
-## 📜 Available Scripts
-
-| Script | Description |
-|---|---|
-| `npm run dev` | Start local dev server with hot-reload |
-| `npm run build` | Build production bundle to `/dist` |
-| `npm run preview` | Preview the production build locally |
-| `npm run lint` | Run ESLint across all source files |
-
 ---
 
 ## 🌐 Live Demo
@@ -262,58 +155,7 @@ Or click **"Create Account"** to register a new user.
 
 ---
 
-## 🔄 Data Flow
-
-```
-User action (e.g. "Process Next" in Ride Queue  OR  "Approve" in Dashboard panel)
-        │
-        ▼
-dispatch({ type: 'PROCESS_REQUEST' })
-        │
-        ▼
-rideReducer updates:
-  ├── rides[]            → Ride History updates
-  ├── requestQueue[]     → Pending Requests count badge decrements
-  ├── points + 80        → Rewards & Profile update
-  ├── totalCo2Saved      → Eco Score updates
-  ├── weeklyEco[today]   → Bar chart updates
-  └── completedRides++   → Activity tab updates
-        │
-        ▼
-useEffect persists new state → localStorage
-        │
-        ▼
-All consuming components re-render instantly via useContext
-```
-
----
-
-## 🧪 Testing the Live Data Flow
-
-1. Go to **Dashboard** (`/dashboard`)
-2. Click the **Pending Requests** stat card → panel expands
-3. Click **Approve** on any request → count badge decrements, row animates out
-4. Navigate to **Ride History** → the approved ride appears at the top
-5. Navigate to **Toll Planner** → select different **From / To** pairs and click **Find Routes** — prices, distances, and stops change per route
-6. Go to **Ride Queue** (`/queue`)
-7. Add a request: name → pickup → drop → **Enqueue Request**
-8. Click **Process Next** → green toast confirms *"✅ Ride saved! +80 pts • +2.4 kg CO₂ tracked"*
-9. Navigate to **Eco Score** → today's bar has grown
-10. Navigate to **Profile → Activity** → points and ride count updated
-11. Refresh the page → all data persists from `localStorage`
-
----
-
-## 🙋‍♀️ Author
-
-**Bhavika Khabya**  
 Semester II Final Project — React.js  
 [GitHub Profile](https://github.com/bhavikakhabya)
 
 ---
-
-<div align="center">
-
-Made with ❤️ and React · © 2026 CarpoolFlow
-
-</div>
